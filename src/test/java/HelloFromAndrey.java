@@ -41,4 +41,26 @@ public class HelloFromAndrey {
         String locationHeader = response.getHeader("Location");
         System.out.println(locationHeader);
     }
+
+    @Test
+    public void testGetLongRedirectSearchEnd() {
+        int status = 0;
+        String location = "https://playground.learnqa.ru/api/long_redirect";
+        while (status != 200) {
+            Response response = RestAssured
+                    .given()
+                    .redirects()
+                    .follow(false)
+                    .when()
+                    .get(location)
+                    .andReturn();
+
+            int statusCode = response.getStatusCode();
+            String locationHeader = response.getHeader("Location");
+            System.out.println(locationHeader);
+            System.out.println(statusCode);
+            location = locationHeader;
+            status = statusCode;
+        }
+    }
 }
