@@ -2,6 +2,7 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import java.util.Objects;
 
 public class HelloFromAndrey {
 
@@ -62,5 +63,33 @@ public class HelloFromAndrey {
             location = locationHeader;
             status = statusCode;
         }
+    }
+
+    @Test
+    public void testGetLongTimeJobToken() throws InterruptedException {
+        JsonPath startJob = RestAssured
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job")
+                .jsonPath();
+
+        String tokenValue = startJob.get("token");
+        int timeoutSeconds = startJob.get("seconds");
+
+        JsonPath checkResultWithoutTimeout = RestAssured
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job?token=" + tokenValue)
+                .jsonPath();
+
+        String statusWithoutTimeout = checkResultWithoutTimeout.get("status");
+        assert Objects.equals(statusWithoutTimeout, "Job is NOT ready");
+
+        Thread.sleep(timeoutSeconds * 1000L);
+
+        JsonPath checkResultWithTimeout = RestAssured
+                .get("https://playground.learnqa.ru/ajax/api/longtime_job?token=" + tokenValue)
+                .jsonPath();
+
+        String statusWithTimeout = checkResultWithTimeout.get("status");
+        String resultJob = checkResultWithTimeout.get("result");
+        assert Objects.equals(statusWithTimeout, "Job is ready");
+        assert !Objects.equals(resultJob, "");
     }
 }
