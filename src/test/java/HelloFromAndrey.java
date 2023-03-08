@@ -1,10 +1,11 @@
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.util.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloFromAndrey {
 
@@ -132,5 +133,11 @@ public class HelloFromAndrey {
                System.out.println(serverResponse);
            }
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"моделированный", "труднорастворимые"})
+    public void testStringLengthCheck(String name){
+        assertTrue(name.length() > 15, "The number of characters is less than 15. Name length = " + name.length());
     }
 }
