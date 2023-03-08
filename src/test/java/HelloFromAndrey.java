@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HelloFromAndrey {
@@ -139,5 +141,17 @@ public class HelloFromAndrey {
     @ValueSource(strings = {"моделированный", "труднорастворимые"})
     public void testStringLengthCheck(String name){
         assertTrue(name.length() > 15, "The number of characters is less than 15. Name length = " + name.length());
+    }
+
+    @Test
+    public void testAssertCookie(){
+        Response response = RestAssured
+                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .andReturn();
+
+        Map<String, String> allCookies = response.getCookies();
+        String cookie = response.cookie("HomeWork");
+        assertTrue(allCookies.containsKey("HomeWork"), "Response doesn't have 'HomeWork' cookie");
+        assertEquals("hw_value", cookie, "Unexpected cookie");
     }
 }
