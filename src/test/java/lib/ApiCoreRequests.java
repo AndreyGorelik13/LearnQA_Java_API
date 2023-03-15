@@ -83,4 +83,15 @@ public class ApiCoreRequests {
                 .post(url)
                 .andReturn();
     }
+
+    @Step("Login and check details of another user")
+    public Response testGetUserDetailsAuthAsOtherUser (String url, Map<String, String> authData, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(authData)
+                .get(url)
+                .andReturn();
+    }
 }
