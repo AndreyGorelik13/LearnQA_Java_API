@@ -2,8 +2,7 @@ package lib;
 
 import io.restassured.response.Response;
 
-import static org.hamcrest.Matchers.hasKey;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Assertions {
@@ -50,5 +49,9 @@ public class Assertions {
         for (String expectedFieldName : expectedFieldNames){
             Assertions.assertJsonHasField(Response,expectedFieldName);
         }
+    }
+
+    public static void assertResponseHasPart (Response Response, String commonPart) {
+        Response.then().assertThat().body(startsWith(commonPart));
     }
 }

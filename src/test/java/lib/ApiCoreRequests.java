@@ -47,4 +47,40 @@ public class ApiCoreRequests {
                 .post(url)
                 .andReturn();
     }
+
+    @Step("Create user with invalid email - without @")
+    public Response createUserWithInvalidEmail (String url, Map<String, String> userData ) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
+
+    @Step ("Create user without one parameter")
+    public Response createUserWithoutOneField (String url, Map<String, String> userData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
+
+    @Step ("Create user with too short username")
+    public Response createUserWithShortUserName(String url, Map<String, String> userData ) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
+
+    @Step("Create user with too long username")
+    public Response testWithLongUserName(String url, Map<String, String> userData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
 }
