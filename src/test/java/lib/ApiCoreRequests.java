@@ -2,9 +2,12 @@ package lib;
 
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import io.restassured.http.Header;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -92,6 +95,66 @@ public class ApiCoreRequests {
                 .cookie("auth_sid", cookie)
                 .body(authData)
                 .get(url)
+                .andReturn();
+    }
+
+    @Step("Change data by unauthorized user")
+    public Response makePutRequest(String url, Map<String, String> editData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(editData)
+                .put(url)
+                .andReturn();
+    }
+
+    @Step ("Change email of user (POST)")
+    public Response changeEmailOfUser (String url,Map<String, String> userData ) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
+
+    @Step ("Change firstName of user")
+    public Response changeFirstNameOfUser (String url,Map<String, String> userData ) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(userData)
+                .post(url)
+                .andReturn();
+    }
+
+    @Step("Change email of user (PUT)")
+    public Response makePutRequestToChangeEmail (String url, Map<String, String> authData, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(authData)
+                .put(url)
+                .andReturn();
+    }
+
+    @Step("Change firstName of user")
+    public Response makePutRequestToChangeFirstName (String url, Map<String, String> authData, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(authData)
+                .put(url)
+                .andReturn();
+    }
+
+    @Step("Change data of another user")
+    public Response makePutRequestToChangeDataOfAnotherUser (String url, Map<String, String> authData, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(authData)
+                .put(url)
                 .andReturn();
     }
 }
