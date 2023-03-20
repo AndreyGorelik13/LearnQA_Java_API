@@ -1,9 +1,13 @@
 package tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -13,6 +17,9 @@ public class UserDeleteTest {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Epic("Удаление пользователей")
+    @DisplayName("Удаление пользователя по ID 2")
+    @Severity(SeverityLevel.CRITICAL)
     public void testDeleteUserId2() {
 
         Map<String, String> userData = new HashMap<>();
@@ -33,6 +40,9 @@ public class UserDeleteTest {
     }
 
     @Test
+    @Epic("Удаление пользователей")
+    @DisplayName("Удаление ранее созданного пользователя")
+    @Severity(SeverityLevel.CRITICAL)
     public void testDeleteOwnUser () {
 
         //CREATE NEW USER
@@ -70,6 +80,9 @@ public class UserDeleteTest {
     }
 
     @Test
+    @Epic("Удаление пользователей")
+    @DisplayName("Удаление пользователя, авторизованным другим пользователем")
+    @Severity(SeverityLevel.CRITICAL)
     public void testDeleteUserIdByAnotherUser() {
 
         //LOGIN

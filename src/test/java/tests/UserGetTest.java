@@ -1,10 +1,14 @@
 package tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -14,6 +18,9 @@ public class UserGetTest extends BaseTestCase {
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
 
     @Test
+    @Epic("Получение данных")
+    @DisplayName("Получение данных неавторизованным пользователем")
+    @Severity(SeverityLevel.BLOCKER)
     public void testGetUserDataNotAuth(){
         Response responseUserData = RestAssured
                 .get("https://playground.learnqa.ru/api/user/2")
@@ -26,6 +33,9 @@ public class UserGetTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Получение данных")
+    @DisplayName("Получение данных пользователя авторизованным пользователем")
+    @Severity(SeverityLevel.BLOCKER)
     public void testGetUserDetailsAuthAsSameUser(){
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
@@ -52,6 +62,9 @@ public class UserGetTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Получение данных")
+    @DisplayName("Получение данных другого пользователя авторизованным пользователем")
+    @Severity(SeverityLevel.BLOCKER)
     public void testGetUserDetailsAuthAsOtherUser () {
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");

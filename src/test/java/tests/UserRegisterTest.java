@@ -1,6 +1,9 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.Assertions;
@@ -54,6 +57,9 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Регистрация")
+    @DisplayName("Создание пользователя с некорректным email(отсутствует @)")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserWithInvalidEmail () {
 
         String email = "vinkotovexample.com";
@@ -69,6 +75,7 @@ public class UserRegisterTest extends BaseTestCase {
         Assertions.assertResponseTextEquals(responseCreateAuth, "Invalid email format");
     }
 
+    @Epic("Регистрация")
     @ParameterizedTest
     @CsvSource({
             "testuser,testuser,testuser,testuser@gmail.com,",
@@ -77,6 +84,8 @@ public class UserRegisterTest extends BaseTestCase {
             "testuser,,testuser,testuser@gmail.com,1313",
             ",testuser,testuser,testuser@gmail.com,1313",
     })
+    @DisplayName("Создание пользователя без указания одного из полей")
+    @Severity(SeverityLevel.BLOCKER)
     public void testCreateUserWithoutOneField (String username, String firstName, String lastName, String email, String password) {
 
         Map<String, String> userData = new HashMap<>();
@@ -94,6 +103,9 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Регистрация")
+    @DisplayName("Создание пользователя с очень коротким именем в один символ")
+    @Severity(SeverityLevel.BLOCKER)
     public void testWithShortUserName () {
         Map<String, String> userData = new HashMap<>();
         userData = DataGenerator.getRegistrationData(userData);
@@ -107,6 +119,9 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Регистрация")
+    @DisplayName("Создание пользователя с очень длинным именем - длиннее 250 символов")
+    @Severity(SeverityLevel.BLOCKER)
     public void testWithLongUserName () {
         Map <String, String> userData = new HashMap<>();
         String longUsername = "ClarenceBennettChristopherKingPhillipJacksonPaulGreeneMarkRussellWalterBaileyMarcusHillJacobWilsonMarkAndrewsAndrewMillerMarkTateHarveyTaylorEdwardJacobsMichaelWalkerDanieGriffinJamesThompsonAlanStephensFrankAndersonAndrewDavisPaulCooperKennethDavisAnthonyThomasDavidFreemanEdwardMatthewsMatthewSimmons";

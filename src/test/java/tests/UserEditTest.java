@@ -1,5 +1,8 @@
 package tests;
 
+import io.qameta.allure.Epic;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -7,6 +10,7 @@ import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -62,6 +66,9 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Редактирование пользователя")
+    @DisplayName("Попытаемся изменить данные пользователя, будучи неавторизованными")
+    @Severity(SeverityLevel.NORMAL)
     public void testEditDataWithoutAuth () {
 
         String newName = "Changed Name";
@@ -76,6 +83,9 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Редактирование пользователя")
+    @DisplayName("Попытаемся изменить email пользователя, будучи авторизованными тем же пользователем, на новый email без символа @")
+    @Severity(SeverityLevel.NORMAL)
     public void testChangeEmailOfUser () {
         //LOGIN
         Map <String, String> authData = new HashMap<>();
@@ -107,6 +117,9 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Редактирование пользователя")
+    @DisplayName("Попытаемся изменить firstName пользователя, будучи авторизованными тем же пользователем, на очень короткое значение в один символ")
+    @Severity(SeverityLevel.NORMAL)
     public void testChangeFirstNameOfUser() {
         //LOGIN
         Map <String, String> authData = new HashMap<>();
@@ -137,6 +150,9 @@ public class UserEditTest extends BaseTestCase {
     }
 
     @Test
+    @Epic("Редактирование пользователя")
+    @DisplayName("Попытаемся изменить данные пользователя, будучи авторизованным другим пользователем")
+    @Severity(SeverityLevel.NORMAL)
     public void testEditDataByAuthOtherUser () {
         //LOGIN
         Map <String, String> authData = new HashMap<>();
