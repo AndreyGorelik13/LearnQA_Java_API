@@ -157,4 +157,15 @@ public class ApiCoreRequests {
                 .put(url)
                 .andReturn();
     }
+
+    @Step("Try to delete user with id 2")
+    public Response makeDeleteRequest (String url, Map<String, String> userData, String token, String cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(userData)
+                .delete(url)
+                .andReturn();
+    }
 }
